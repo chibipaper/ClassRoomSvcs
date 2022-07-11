@@ -1,0 +1,77 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  SubnetID:
+    Type: String
+Resources:
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: example-ecs-cluster
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: deployment-example-log-group # name of log group
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: deployment-example-role
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy #allow ecs-tasks to log to cloudwatch
+  ContainerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: ContainerSecurityGroup
+      # A security group acts as a virtual firewall, controlling the traffic that is allowed to reach
+      # and leave the resources that it is associated with. For example, after you associate a security
+      # group with an EC2 instance, it controls the inbound and outbound traffic for the instance.
+      GroupDescription: Security group for NGINX container
+      SecurityGroupIngress: # ingress -- right to enter a property. egress -- right to exit a property
+        - IpProtocol: tcp
+          FromPort: 80 # exposed port
+          ToPort: 80
+          CidrIp: 0.0.0.0/0 # range of IP address a network uses, anyone on internet can access this
+
+## try deploying the above first
+#  TaskDefinition:
+#    Type: AWS::ECS::TaskDefinition
+#    Properties:
+#      Family: deployment-example-task # Group different task definition
+#      Cpu: 256 # cpu requirement to run this task
+#      Memory: 512 # memory requirements to run this task. Fargate has limitations to resource utilisation, but this is sufficient
+#      NetworkMode: awsvpc # all capabilities an EC2 has, eg. ability to assign IP address to itself
+#      ExecutionRoleArn: !Ref ExecutionRole
+#      ContainerDefinitions:
+#        - Name: deployment-example-container
+#          Image: nginx:1.17.7 # TODO: ImageUrl from dockerhub, how?
+#          PortMappings:
+#            - ContainerPort: 80
+#          LogConfiguration:
+#            LogDriver: awslogs
+#            Options:
+#              awslogs-region: !Ref AWS::Region
+#              awslogs-group: !Ref LogGroup
+#              awslogs-stream-prefix: ecs
+#      RequiresCompatibilities: # this task only can run as either EC2 or Fargate mode.
+#        - EC2
+#        - FARGATE
+#  Service:
+#    Type: AWS::ECS::Service
+#    Properties:
+#      ServiceName: deployment-example-service
+#      Cluster: !Ref Cluster
+#      TaskDefinition: !Ref TaskDefinition
+#      DesiredCount: 1 # for availability, best to have >=2 instances
+#      LaunchType: FARGATE # aws fargate will take care of underlying hardware requirements to launch this task
+#      NetworkConfiguration:
+#        AwsvpcConfiguration:
+#          AssignPublicIp: ENABLED # yes we want a public IP
+#          Subnets: # production env. should have multiple subnets
+#            - !Ref SubnetID
+#          SecurityGroups:
+#            - !GetAtt ContainerSecurityGroup.GroupId # allow ingress on port 80

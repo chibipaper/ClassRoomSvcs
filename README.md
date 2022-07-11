@@ -31,3 +31,17 @@ docker ps [OPTIONS]
 docker run -p 8081:8090 classroomsvc
 // docker run -port container-port:host-port docker-image-name
 ```
+
+## Cloudformation commands
+```aidl
+aws cloudformation create-stack --profile personal --stack-name example-deployment --template-body file://./infrastructure/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters 'ParameterKey=SubnetID, ParameterValue=subnet-1881f750' --region ap-southeast-1
+aws cloudformation update-stack --profile personal --stack-name example-deployment --template-body file://./infrastructure/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters 'ParameterKey=SubnetID, ParameterValue=subnet-1881f750' --region ap-southeast-1
+
+aws cloudformation update-stack 
+-- stack-name example-deployment
+-- template-body file://./infrastructure/ecs.yml
+-- capabilities CAPABILITY_NAMED_IAM
+-- parameters 'ParameterKey=SubnetID, ParameterValue=subnet-1881f750'
+
+ 
+```
