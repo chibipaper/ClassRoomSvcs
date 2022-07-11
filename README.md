@@ -34,14 +34,14 @@ docker run -p 8081:8090 classroomsvc
 
 ## Cloudformation commands
 ```aidl
-aws cloudformation create-stack --profile personal --stack-name example-deployment --template-body file://./infrastructure/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters 'ParameterKey=SubnetID, ParameterValue=subnet-1881f750' --region ap-southeast-1
-aws cloudformation update-stack --profile personal --stack-name example-deployment --template-body file://./infrastructure/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters 'ParameterKey=SubnetID, ParameterValue=subnet-1881f750' --region ap-southeast-1
+aws cloudformation create-stack --profile personal --stack-name example-deployment --template-body file://./infrastructure/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters 'ParameterKey=SubnetID, ParameterValue=subnet-065f03498e206a52a' --region ap-southeast-1
+aws cloudformation update-stack --profile personal --stack-name example-deployment --template-body file://./infrastructure/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters 'ParameterKey=SubnetID, ParameterValue=subnet-065f03498e206a52a' --region ap-southeast-1
 
 aws cloudformation update-stack 
 -- stack-name example-deployment
 -- template-body file://./infrastructure/ecs.yml
 -- capabilities CAPABILITY_NAMED_IAM
--- parameters 'ParameterKey=SubnetID, ParameterValue=subnet-1881f750'
+-- parameters 'ParameterKey=SubnetID, ParameterValue=subnet-065f03498e206a52a'
 
  
 ```
