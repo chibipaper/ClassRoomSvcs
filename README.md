@@ -1,12 +1,23 @@
 # ClassRoomSvcs
+Template app for microservice application to be deployed on AWS ECS cluster. 
 
-## Getting Started
+# Getting Started
+## Microservice app
+### Project Setup
+1. Install MySQL Server, mySql Workbench, or use DBeaver or an equivalent DBMS that can run MySQL DBS
+2. Alternatively, run mySQL container using docker for easy setup.
+3. Create a Database 'peerTutor'
+4. Run app using ```mvn clean install```
 
 ### Run Commands
 ```aidl
 mvn spring-boot:run
 mvn clean install
 ```
+-------
+# Docker
+### Docker Setting up
+docker login
 
 ## Docker Commands
 
@@ -17,6 +28,10 @@ docker build -t classroomsvc:latest .
 // docker build -tag image name:tag name <where dockerfile is located>
 ```
 
+
+### login to dockerhub using docker cli
+docker login
+
 ### View docker images
 ```aidl
 // view docker images
@@ -25,6 +40,9 @@ docker images
 // view running docker images
 docker ps [OPTIONS]
 ```
+
+### push to dockerhub
+docker push chibipaper/classroom:v1
 
 ### Run docker image
 ```aidl
