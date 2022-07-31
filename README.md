@@ -1,5 +1,22 @@
 # ClassRoomSvcs
-Template app for microservice application to be deployed on AWS ECS cluster. 
+Template app for microservice application to be deployed on AWS ECS cluster + CI CD pipeline 
+
+Tech Stack: MySQL, Spring-boot + Hibernate JPA, Docker, AWS ECS, AWS CloudFormation
+
+# Goals
+- [x] Basic Spring JPA CRUD post/put/get/delete
+- [x] Local MySQL Connection Setup 
+- [ ] App Logging FE/BE
+- [ ] Generalise Exception Handling Messages
+- [ ] Dockerfile configuration
+- [ ] Environment variables + integration with CLI commands
+- [ ] Setup CI CD pipeline for 1 microservice + Docker
+- [ ] Proper handling of app secrets
+- [ ] Windows + macOS compatability support (to test on both platforms)
+- [ ] Test inter-service communication with API Gateway, access need for async communication protocol
+- [ ] RDS setup, connection of app to RDS
+- [ ] Basic network configurations for ECS cluster
+- [ ] Streamlining process with CloudFormation template after manual configurations have been tested
 
 # Getting Started
 ## Microservice app
@@ -30,7 +47,7 @@ docker build -t classroomsvc:latest .
 
 
 ### login to dockerhub using docker cli
-docker login
+```docker login```
 
 ### View docker images
 ```aidl
@@ -42,7 +59,7 @@ docker ps [OPTIONS]
 ```
 
 ### push to dockerhub
-docker push chibipaper/classroom:v1
+```docker push chibipaper/classroom:v1```
 
 ### Run docker image
 ```aidl

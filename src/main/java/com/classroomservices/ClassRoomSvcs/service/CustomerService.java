@@ -1,4 +1,6 @@
 package com.classroomservices.ClassRoomSvcs.service;
 
-public class CustomerService {
+import com.classroomservices.ClassRoomSvcs.repository.CustomerRepository;
+
+public abstract class CustomerService implements CustomerRepository {
 }
