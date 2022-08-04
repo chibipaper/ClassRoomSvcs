@@ -49,6 +49,12 @@ docker build -t classroomsvc:latest .
 ### login to dockerhub using docker cli
 ```docker login```
 
+### Docker-compose
+```aidl
+docker-compose up
+docker-compose down --rmi all //clear cache
+```
+
 ### View docker images
 ```aidl
 // view docker images

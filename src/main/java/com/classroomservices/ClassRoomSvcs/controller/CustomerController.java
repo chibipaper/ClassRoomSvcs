@@ -13,7 +13,10 @@ import java.util.Map;
 public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;// = new CustomerRepository();
-
+    @GetMapping(path="/")
+    public @ResponseBody String defaultResponse(){
+        return "Hello world";
+    }
     @GetMapping(path="/health")
     public @ResponseBody String healthCheck(){
         return "Ok";
