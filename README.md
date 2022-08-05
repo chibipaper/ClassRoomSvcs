@@ -27,13 +27,43 @@ Tech Stack: MySQL, Spring-boot + Hibernate JPA, Docker, AWS ECS, AWS CloudFormat
 1. Install MySQL Server, mySql Workbench, or use DBeaver or an equivalent DBMS that can run MySQL DBS
 2. Alternatively, run mySQL container using docker for easy setup.
 3. Create a Database 'peerTutor'
-4. Run app using ```mvn clean install```
+4. Run app using ```mvn clean install```, or ```mvn spring-boot:run```
 
-### Run Commands
+## Run Commands
+
+### Running Locally without Docker
+Make sure a SQL server is running locally. Take note of the port it is listening to (usually 3306)
+If SQL server is not listening on port 3306, configure it to run on port 3306.
+
+Otherwise, check application.properties datasource field. Make sure the url is pointing to the right port and that the credentials are correct.
+```aidl
+spring.datasource.url=jdbc:mysql://localhost:3306/peerTutor?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=my-secret-pw
+```
+Then, start spring boot app with either of these commands:
 ```aidl
 mvn spring-boot:run
 mvn clean install
 ```
+
+### Running Locally using Docker Compose
+Launch MySql server, spring container together
+```aidl
+// start applications
+docker-compose up
+// close
+docker-compose down 
+```
+
+### Running Locally but connected to AWS RDS using Docker only
+```aidl
+// build image
+docker build . --no-cache  -t app
+// run image with env variables
+docker run -e "SPRING_PROFILES_ACTIVE=aws" -e "SPRING_DOCKER_PORT=8080" -e "MYSQLDB_USER=root" -e "MYSQLDB_ROOT_PASSWORD=my-secret-pw" -e "MYSQLDB_DOCKER_PORT=3306" -p 8080:8080 -e "MYSQLDB_DATABASE=peerTutor" app
+```
+
 -------
 # Docker
 ### Docker Setting up
